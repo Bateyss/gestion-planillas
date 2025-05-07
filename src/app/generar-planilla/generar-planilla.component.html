@@ -1,0 +1,127 @@
+<!-- <h2 mat-dialog-title>Generar Planilla</h2>
+<mat-dialog-content>
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            Tabla Planilla
+        </mat-card-header>
+        <mat-card-content>
+            <div [style.margin]="'5px'" *ngFor="let planillax of planillaList">
+                <div>{{planillax.empleado.apellidos}}</div>
+            </div>
+
+            <table mat-table [dataSource]="planillaList" class="mat-elevation-z8">
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Nombre</th>
+                    <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.nombre}} </td>
+                </ng-container>
+                <ng-container matColumnDef="empleado">
+                    <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Empleado</th>
+                    <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.empleado.nombres}}
+                        {{element.empleado.apellidos}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="esEmpleadoDirecto">
+                    <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Es Empleado Directo</th>
+                    <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.esEmpleadoDirecto?
+                        'SI' :
+                        'NO'}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="salario">
+                    <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Salario Mensual</th>
+                    <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.salario |
+                        currency}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="periodo">
+                    <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Periodo</th>
+                    <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.periodo}}
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row
+                    *matHeaderRowDef="['nombre','empleado', 'esEmpleadoDirecto', 'salario', 'periodo','fechaIngreso']">
+                </tr>
+                <tr mat-row
+                    *matRowDef="let row; columns: ['nombre','empleado', 'esEmpleadoDirecto', 'salario', 'periodo','fechaIngreso'];">
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content> -->
+
+<h2 mat-dialog-title>Generar Planilla</h2>
+<mat-dialog-content>
+    <table mat-table [dataSource]="planillaList" class="mat-elevation-z8">
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Nombre</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.nombre}} </td>
+        </ng-container>
+        <ng-container matColumnDef="empleado">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Empleado</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.empleado.nombres}}
+                {{element.empleado.apellidos}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="esEmpleadoDirecto">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Es Empleado Directo</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.esEmpleadoDirecto?
+                'SI' :
+                'NO'}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="salario">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Salario Mensual</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.salario |
+                currency}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="periodo">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Periodo</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.periodo}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaIngreso">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Fecha Ingreso</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.fechaIngreso |
+                date}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isssPatronal">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">ISSS patronal</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.isssPatronal |
+                currency}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="afpPatronal">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">AFP patronal</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.afpPatronal |
+                currency}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isssEmpleado">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">ISSS empleado</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.isssEmpleado |
+                currency}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="afpEmpleado">
+            <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">AFP empleado</th>
+            <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.afpEmpleado |
+                currency}}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="['nombre','empleado', 'esEmpleadoDirecto', 'salario', 'periodo','fechaIngreso', 'isssPatronal', 'afpPatronal', 'isssEmpleado', 'afpEmpleado']">
+        </tr>
+        <tr mat-row
+            *matRowDef="let row; columns: ['nombre','empleado', 'esEmpleadoDirecto', 'salario', 'periodo','fechaIngreso', 'isssPatronal', 'afpPatronal', 'isssEmpleado', 'afpEmpleado'];">
+        </tr>
+    </table>
+</mat-dialog-content>

@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <span [style.marginLeft]="'2em'"><img [style.height]="'100%'" [style.maxHeight]="'1.5em'" src="logo_home_textufil.png"></span>
+    <span [style.marginLeft]="'2em'">gestion de planillas</span>
+    <span [style.marginLeft]="'2em'" class="example-spacer"></span>
+    <button mat-icon-button class="example-icon" (click)="abrirMenu()" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <router-outlet></router-outlet>
+    </div>
+</div>

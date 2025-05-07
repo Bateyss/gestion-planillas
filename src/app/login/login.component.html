@@ -1,0 +1,37 @@
+<mat-expansion-panel hideToggle expanded="true" class="login-container">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Iniciar Sesión
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-card>
+        <mat-card-title>
+                <label *ngIf="mensajeLogin && mensajeLogin != ''" class="h4">{{mensajeLogin}}</label>
+        </mat-card-title>
+        <mat-card-content>
+            <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="login()">
+                <mat-grid-list cols="1">
+                    <mat-card-title>
+                        <mat-form-field>
+                            <mat-label>Usuario</mat-label>
+                            <input matInput required formControlName="username"
+                                [ngClass]="{ 'is-invalid': loginF('username')?.errors }" />
+                            <mat-error *ngIf="loginF('username')?.errors">Ingrese Usuario</mat-error>
+                        </mat-form-field>
+                    </mat-card-title>
+                    <mat-card-title>
+                        <mat-form-field>
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput required formControlName="password"
+                                [ngClass]="{ 'is-invalid': loginF('password')?.errors }" type="password" />
+                            <mat-error *ngIf="loginF('password')?.errors">Ingrese Contraseña</mat-error>
+                        </mat-form-field>
+                    </mat-card-title>
+                    <mat-card-title>
+                        <button mat-stroked-button color="primary" type="submit">Ingresar</button>
+                    </mat-card-title>
+                </mat-grid-list>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</mat-expansion-panel>
