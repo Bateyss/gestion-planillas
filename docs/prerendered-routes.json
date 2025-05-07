@@ -1,8 +1,0 @@
-{
-  "routes": {
-    "/": {},
-    "/menu": {},
-    "/menu/login": {},
-    "/menu/planilla": {}
-  }
-}
