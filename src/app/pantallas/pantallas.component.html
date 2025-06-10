@@ -8,7 +8,7 @@
     <span [style.marginLeft]="'1em'"></span>
     <span>gestion de planillas</span>
     <span [style.marginLeft]="'2em'" class="example-spacer"></span>
-    <span >
+    <span>
         <button [hidden]="!logged" matButton filled-icon-spacing [matMenuTriggerFor]="menu">
             <mat-icon>account_circle</mat-icon>
         </button>
@@ -17,6 +17,7 @@
                 <mat-icon>account_circle_off</mat-icon>
                 <span>Cerrar Sesion</span>
             </button>
+            <mat-slide-toggle [(ngModel)]="isChecked" (change)="onThemeSwitchChange()">Colores: {{isChecked?'Oscuro':'Claro'}}</mat-slide-toggle>
         </mat-menu>
     </span>
 </mat-toolbar>

@@ -1,10 +1,10 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { MaterialModule } from '../material/material.module';
-import { NavigationExtras, Router, RouterOutlet } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationExtras, Router, RouterOutlet } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
 import { MenuComponent } from '../menu/menu.component';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-pantallas',
@@ -14,7 +14,9 @@ import { DOCUMENT } from '@angular/common';
 })
 export class PantallasComponent {
 
-  public logged = false;
+  logged = false;
+  isChecked = false;
+  public isLightTheme = true;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -26,12 +28,18 @@ export class PantallasComponent {
   }
 
   ngOnInit(): void {
-    console.log('init');
-
   }
 
   ngOnChanges(): void {
-    console.log('changue');
+  }
+
+  onThemeSwitchChange() {
+    this.isLightTheme = !this.isChecked;
+
+    document.body.setAttribute(
+      'data-theme',
+      this.isLightTheme ? 'light' : 'dark'
+    );
   }
 
   routerActivated(value: any): void {

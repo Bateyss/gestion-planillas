@@ -69,8 +69,24 @@ export class PlanillaComponent {
     dialogConfig.data = {
       planillaList: this.planillaList
     };
-    
+
     const dialogRef = this.dialog.open(GenerarPlanillaComponent, dialogConfig);
+  }
+
+  editarPlanilla(planilla: Planilla) {
+    this.planillaSeleccionado = planilla;
+    this.crearPlanilla();
+  }
+
+  revisarPlanilla(planilla: Planilla) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      planillaSeleccionado: planilla
+    };
+
+    const dialogRef = this.dialog.open(RevisarPlanillaDialog, dialogConfig);
   }
 
   crearPlanilla() {
@@ -82,9 +98,9 @@ export class PlanillaComponent {
     };
     dialogConfig.exitAnimationDuration = '1000ms';
     dialogConfig.enterAnimationDuration = '1000ms';
-    
+
     const dialogRef = this.dialog.open(CrearPlanillaDialog, dialogConfig);
-    dialogRef.afterClosed().subscribe(  
+    dialogRef.afterClosed().subscribe(
       result => {
         this.cargarPlanillas();
         this.planillaSeleccionado = this.dataService.getPlanillaVacio();
@@ -194,9 +210,11 @@ export class CrearPlanillaDialog {
       this.planillaSeleccionado.fechaIngreso = this.planillaF('fechaIngreso')?.value;
 
       if (this.planillaSeleccionado.id > 0) {
-        this.dataService.editarPlanilla(this.document, this.planillaSeleccionado);  
-      }else{
+        this.dataService.editarPlanilla(this.document, this.planillaSeleccionado);
+        Utils.openSnackBar('CAMBIOS GUARDADOS EXITOSAMENTE', 'aceptar', this._snackBar);
+      } else {
         this.dataService.pushPlanilla(this.document, this.planillaSeleccionado);
+        Utils.openSnackBar('NUEVA PLANILLA CREADA EXITOSAMENTE', 'aceptar', this._snackBar);
       }
       this.planillaForm = this.formBuilder.group({
         nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -205,10 +223,9 @@ export class CrearPlanillaDialog {
         salario: [0, [Validators.required, Validators.min(0.00)]],
         periodo: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]]
       });
-      Utils.openSnackBar('listo', 'ok', this._snackBar);
       this.dialogRef.close();
     } else {
-      Utils.openSnackBar('completa las validaciones', 'ok', this._snackBar);
+      Utils.openSnackBar('COMPLETAR LAS VALIDACIONES', 'aceptar', this._snackBar);
     }
   }
 
@@ -219,3 +236,84 @@ export class CrearPlanillaDialog {
 
   planillaF(control: string) { return this.planillaForm.get(control); }
 }
+
+@Component({
+  selector: 'dialog-revisar',
+  templateUrl: 'datos.planilla.component.html',
+  imports: [MaterialModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RevisarPlanillaDialog {
+
+  public planillaSeleccionado: Planilla = {
+    id: 0,
+    empleado: {
+      id: 0,
+      puesto: {
+        id: 0,
+        departamento: {
+          id: 0,
+          nombreDepartamento: ''
+        },
+        nombrePuesto: '',
+        ingresosMinimos: 0,
+        ingresosMaximos: 0
+      },
+      nombres: '',
+      apellidos: ''
+    },
+    nombre: '',
+    esEmpleadoDirecto: false,
+    salario: 0,
+    periodo: '',
+    fechaIngreso: new Date()
+  };
+
+  public planillaSel: any;
+
+  readonly dialogRef = inject(MatDialogRef<RevisarPlanillaDialog>);
+
+  constructor(
+    public dialog: MatDialog,
+    public dataService: DataService,
+    private _snackBar: MatSnackBar,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      planillaSeleccionado: Planilla
+    }) {
+    this.planillaSeleccionado = data.planillaSeleccionado;
+    this.planillaSel = data.planillaSeleccionado;
+    this.cargarPlanilla();
+  }
+
+  cargarPlanilla() {
+    console.log(this.planillaSeleccionado);
+    console.log(this.planillaSel);
+    
+    var actualDate: Date = new Date()
+    var planillaDate = Date.parse(this.planillaSel.fechaIngreso);
+    var dateYearsDiff = actualDate.getTime() - planillaDate;
+    dateYearsDiff = dateYearsDiff / (1000 * 3600 * 24 * 7);
+    dateYearsDiff = dateYearsDiff / 52.1429;
+
+    this.planillaSel.aniosLaborados = dateYearsDiff;
+
+    var salarioValue = this.planillaSel.salario;
+
+    var isssPatronal = salarioValue < 1000 ? salarioValue * 0.075 : 75;
+    this.planillaSel.isssPatronal = isssPatronal;
+
+    var isssEmpleado = salarioValue < 1000 ? salarioValue * 0.03 : 30;
+    this.planillaSel.isssEmpleado = isssEmpleado;
+
+    var afpPatronal = salarioValue * 0.085;
+    this.planillaSel.afpPatronal = afpPatronal;
+
+    var afpEmpleado = salarioValue * 0.0725;
+    this.planillaSel.afpEmpleado = afpEmpleado;
+
+    //this.data.planillaList[0].salario
+  }
+
+}
+
