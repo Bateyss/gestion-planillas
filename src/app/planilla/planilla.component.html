@@ -1,90 +1,12 @@
 <mat-accordion multi>
     <mat-expansion-panel hideToggle expanded="true">
         <mat-expansion-panel-header>
-            <mat-panel-title>
-                Formulario
-            </mat-panel-title>
+            <mat-panel-description>
+                <button mat-stroked-button *ngIf="!planillaSeleccionado || planillaSeleccionado.id == 0" color="primary" (click)="crearPlanilla()">CREAR PLANILLA</button>
+                <button mat-stroked-button *ngIf="!planillaSeleccionado || planillaSeleccionado.id > 0" color="primary" (click)="crearPlanilla()">EDITAR PLANILLA</button>
+            </mat-panel-description>
         </mat-expansion-panel-header>
-        <mat-card>
-            <mat-card-title>
-                <label *ngIf="!planillaSeleccionado || planillaSeleccionado.id == 0" class="h4">Agregar
-                    Planilla</label>
-                <label *ngIf="planillaSeleccionado && planillaSeleccionado.id > 0" class="h4">Editar
-                    Planilla</label>
-            </mat-card-title>
-            <mat-card-content>
-                <form id="planillaForm" [formGroup]="planillaForm" (ngSubmit)="guardarPlanilla()">
-                    <mat-grid-list cols="1">
-                        <mat-card-title>
-                            <mat-form-field>
-                                <mat-label>Nombre</mat-label>
-                                <input matInput required formControlName="nombre"
-                                    [ngClass]="{ 'is-invalid': planillaF('nombre')?.errors }" />
-                                <mat-error *ngIf="planillaF('nombre')?.errors">Ingrese Nombre</mat-error>
-                            </mat-form-field>
-                        </mat-card-title>
-                        <mat-card-title>
-                            <mat-form-field>
-                                <mat-label>Empleado</mat-label>
-                                <mat-select [compareWith]="compareIds" required formControlName="empleado"
-                                    [ngClass]="{ 'is-invalid': planillaF('empleado')?.errors }">
-                                    <mat-option *ngFor="let empleadox of empleadoList; let i = index"
-                                        [value]="empleadox">{{empleadox.nombres}} {{empleadox.apellidos}}</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="planillaF('empleado')?.errors">Seleccionar Empleado</mat-error>
-                            </mat-form-field>
-                        </mat-card-title>
-                        <mat-card-title>
-                            <mat-form-field>
-                                <mat-label>Es Empleado directo</mat-label>
-                                <mat-select required formControlName="esEmpleadoDirecto"
-                                    [ngClass]="{ 'is-invalid': planillaF('esEmpleadoDirecto')?.errors }">
-                                    <mat-option [value]="true">SI</mat-option>
-                                    <mat-option [value]="false">NO</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="planillaF('esEmpleadoDirecto')?.errors">Selecciona una
-                                    opcion</mat-error>
-                            </mat-form-field>
-                        </mat-card-title>
-                        <mat-card-title>
-                            <mat-form-field>
-                                <mat-label>Salario</mat-label>
-                                <input matInput required formControlName="salario"
-                                    [ngClass]="{ 'is-invalid': planillaF('salario')?.errors }" />
-                                    <mat-hint>Solo Numeros</mat-hint>
-                                <mat-error *ngIf="planillaF('salario')?.errors">Ingrese Salario
-                                    del Periodo</mat-error>
-                            </mat-form-field>
-                        </mat-card-title>
-                        <mat-card-title>
-                            <mat-form-field>
-                                <mat-label>Periodo</mat-label>
-                                <input matInput required formControlName="periodo"
-                                    [ngClass]="{ 'is-invalid': planillaF('periodo')?.errors }" />
-                                <mat-error *ngIf="planillaF('periodo')?.errors">Periodo</mat-error>
-                            </mat-form-field>
-                        </mat-card-title>
-                        <mat-card-title>
-                            <mat-form-field>
-                                <mat-label>Fecha Ingreso</mat-label>
-                                <input matInput required [matDatepicker]="picker" formControlName="fechaIngreso"
-                                    [ngClass]="{ 'is-invalid': planillaF('fechaIngreso')?.errors }" />
-                                <mat-hint>MM/DD/YYYY</mat-hint>
-                                <mat-datepicker #picker></mat-datepicker>
-                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-error *ngIf="planillaF('fechaIngreso')?.errors">Fecha Ingreso</mat-error>
-                            </mat-form-field>
-                        </mat-card-title>
-                        <mat-card-title>
-                            <button mat-stroked-button color="primary" type="submit"
-                                *ngIf="!planillaSeleccionado || planillaSeleccionado.id == 0">Agregar</button>
-                            <button mat-stroked-button color="primary" type="submit"
-                                *ngIf="planillaSeleccionado && planillaSeleccionado.id > 0">Editar</button>
-                        </mat-card-title>
-                    </mat-grid-list>
-                </form>
-            </mat-card-content>
-        </mat-card>
+        
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle expanded="true">
         <mat-expansion-panel-header>
@@ -92,7 +14,7 @@
                 Tabla Planilla
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-stroked-button color="primary" (click)="gemerarPlanilla()"
+                <button mat-stroked-button color="primary" (click)="generarPlanilla()"
                                 *ngIf="planillaList && planillaList.length > 0">Generar Planilla</button>
             </mat-panel-description>
         </mat-expansion-panel-header>

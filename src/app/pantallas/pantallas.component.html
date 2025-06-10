@@ -1,14 +1,28 @@
 <mat-toolbar color="primary">
-    <span [style.marginLeft]="'2em'"><img [style.height]="'100%'" [style.maxHeight]="'1.5em'" src="logo_home_textufil.png"></span>
-    <span [style.marginLeft]="'2em'">gestion de planillas</span>
-    <span [style.marginLeft]="'2em'" class="example-spacer"></span>
     <button mat-icon-button class="example-icon" (click)="abrirMenu()" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span [style.marginLeft]="'1em'"></span>
+    <span><img (click)="homeClick()" [style.height]="'100%'" [style.maxHeight]="'1.5em'"
+            src="logo_home_textufil.png"></span>
+    <span [style.marginLeft]="'1em'"></span>
+    <span>gestion de planillas</span>
+    <span [style.marginLeft]="'2em'" class="example-spacer"></span>
+    <span >
+        <button [hidden]="!logged" matButton filled-icon-spacing [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="cerrarSesion()">
+                <mat-icon>account_circle_off</mat-icon>
+                <span>Cerrar Sesion</span>
+            </button>
+        </mat-menu>
+    </span>
 </mat-toolbar>
 
 <div class="container-fluid">
     <div class="row">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="routerActivated($event)"></router-outlet>
     </div>
 </div>

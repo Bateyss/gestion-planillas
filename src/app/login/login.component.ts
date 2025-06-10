@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MaterialModule } from '../material/material.module'; 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationExtras, Router } from '@angular/router';
+import { MaterialModule } from '../material/material.module';
 import { Utils } from '../utils/utils';
 
 @Component({
@@ -12,12 +14,16 @@ import { Utils } from '../utils/utils';
 })
 export class LoginComponent {
 
-//forms
-public loginForm: UntypedFormGroup;
+  //forms
+  public loginForm: UntypedFormGroup;
 
-public mensajeLogin = '';
+  public mensajeLogin = '';
 
-  constructor(private formBuilder: UntypedFormBuilder, private _snackBar: MatSnackBar){
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private _router: Router,
+    private formBuilder: UntypedFormBuilder, 
+    private _snackBar: MatSnackBar) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]]
@@ -28,10 +34,18 @@ public mensajeLogin = '';
     if (this.validarDatos()) {
       if (this.loginF('username')?.value === 'admin' && this.loginF('password')?.value === '1234') {
         Utils.openSnackBar('Login exitoso', 'ok', this._snackBar);
+        this.document.defaultView?.localStorage?.setItem('usuario', this.loginF('username')?.value);
+        this.document.defaultView?.localStorage?.setItem('logged', 'true');
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            "logged": 'true'
+          }
+        };
+        this._router.navigate(['/menu/planilla'], navigationExtras);
       } else {
         Utils.openSnackBar('Credenciales incorrectas', 'ok', this._snackBar);
       }
-    }else{
+    } else {
       Utils.openSnackBar('Completar credenciales', 'ok', this._snackBar);
     }
   }

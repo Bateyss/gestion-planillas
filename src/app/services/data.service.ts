@@ -20,6 +20,7 @@ export class DataService {
   pushDepartamento(document: Document,datos: Departamento) {
     var localStorage = document.defaultView?.localStorage;
     var departamentosList: Array<Departamento> = this.getDepartamentos(document);
+    datos.id = departamentosList.length + 1;
     departamentosList.push(datos);
     localStorage?.setItem('departamentosList',JSON.stringify(departamentosList));
   }
@@ -27,6 +28,7 @@ export class DataService {
   pushEmpleado(document: Document,datos: Empleado) {
     var localStorage = document.defaultView?.localStorage;
     var empleadosList: Array<Empleado> = this.getEmpleados(document);
+    datos.id = empleadosList.length + 1;
     empleadosList.push(datos);
     localStorage?.setItem('empleadosList',JSON.stringify(empleadosList));
   }
@@ -34,6 +36,7 @@ export class DataService {
   pushPlanilla(document: Document,datos: Planilla) {
     var localStorage = document.defaultView?.localStorage;
     var planillasList: Array<Planilla> = this.getPlanillas(document);
+    datos.id = planillasList.length + 1;
     planillasList.push(datos);
     localStorage?.setItem('planillasList',JSON.stringify(planillasList));
   }
@@ -41,6 +44,7 @@ export class DataService {
   pushPuesto(document: Document,datos: Puesto) {
     var localStorage = document.defaultView?.localStorage;
     var puestosList: Array<Puesto> = this.getPuestos(document);
+    datos.id = puestosList.length + 1;
     puestosList.push(datos);
     localStorage?.setItem('puestosList',JSON.stringify(puestosList));
   }
@@ -250,5 +254,20 @@ export class DataService {
     }
     localStorage?.setItem('puestosList',JSON.stringify(puestosList));
     return puestosList;
+  }
+
+  editarPlanilla(document: Document,datos: Planilla){
+    var planillasList: Array<Planilla> = this.getPlanillas(document);
+    var planillasList2: Array<Planilla> = [];
+
+    planillasList.forEach(arrData => {
+      var newData: Planilla = arrData;
+      if (newData.id == datos.id){
+        newData = datos;
+      }
+      planillasList2.push(newData);
+    });
+
+    localStorage?.setItem('planillasList',JSON.stringify(planillasList2));
   }
 }
