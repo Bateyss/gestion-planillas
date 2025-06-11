@@ -1,33 +1,36 @@
-<mat-dialog-content>
-    <div>
-        <mat-card class="example-card">
-            <mat-card-header>
-                <!-- <div mat-card-avatar class="example-header-image"></div> -->
-                <mat-card-title>Planilla de</mat-card-title>
-                <mat-card-subtitle>{{planillaSel.empleado.nombres}}
-                    {{planillaSel.empleado.apellidos}}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-grid-list cols="2" rowHeight="2:1">
-                    <mat-grid-tile>Nombre Planilla</mat-grid-tile><mat-grid-tile>{{planillaSel.nombre}}</mat-grid-tile>
-                    <mat-grid-tile>Es Empleado Directo</mat-grid-tile><mat-grid-tile>{{planillaSel.esEmpleadoDirecto?
-                        'SI' :
-                        'NO'}}</mat-grid-tile>
-                    <mat-grid-tile>Salario Mensual</mat-grid-tile><mat-grid-tile>{{planillaSel.salario |
-                        currency}}</mat-grid-tile>
-                    <mat-grid-tile>Periodo</mat-grid-tile><mat-grid-tile>{{planillaSel.periodo}}</mat-grid-tile>
-                    <mat-grid-tile>Fecha Ingreso</mat-grid-tile><mat-grid-tile>{{planillaSel.fechaIngreso |
-                        date}}</mat-grid-tile>
-                    <mat-grid-tile>ISSS patronal</mat-grid-tile><mat-grid-tile>{{planillaSel.isssPatronal |
-                        currency}}</mat-grid-tile>
-                    <mat-grid-tile>AFP patronal</mat-grid-tile><mat-grid-tile>{{planillaSel.afpPatronal |
-                        currency}}</mat-grid-tile>
-                    <mat-grid-tile>ISSS empleado</mat-grid-tile><mat-grid-tile>{{planillaSel.isssEmpleado |
-                        currency}}</mat-grid-tile>
-                    <mat-grid-tile>AFP empleado</mat-grid-tile><mat-grid-tile>{{planillaSel.afpEmpleado |
-                        currency}}</mat-grid-tile>
-                </mat-grid-list>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<mat-dialog-content id="gridPlanilla">
+
+    <mat-card class="example-card">
+        <mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <mat-card-title>Planilla de</mat-card-title>
+            <mat-card-subtitle>{{planillaSel.empleado.nombres}}
+                {{planillaSel.empleado.apellidos}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <button matMiniFab  (click)="exportPDF()">
+                        <mat-icon>print</mat-icon>
+                    </button>
+            <mat-grid-list cols="2" rowHeight="2:1">
+                <mat-grid-tile>Nombre
+                    Planilla</mat-grid-tile><mat-grid-tile>{{planillaSel.nombre}}</mat-grid-tile>
+                <mat-grid-tile>Es Empleado Directo</mat-grid-tile><mat-grid-tile>{{planillaSel.esEmpleadoDirecto?
+                    'SI' :
+                    'NO'}}</mat-grid-tile>
+                <mat-grid-tile>Salario Mensual</mat-grid-tile><mat-grid-tile>{{planillaSel.salario |
+                    currency}}</mat-grid-tile>
+                <mat-grid-tile>Periodo</mat-grid-tile><mat-grid-tile>{{planillaSel.periodo}}</mat-grid-tile>
+                <mat-grid-tile>Fecha Ingreso</mat-grid-tile><mat-grid-tile>{{planillaSel.fechaIngreso |
+                    date}}</mat-grid-tile>
+                <mat-grid-tile>ISSS patronal</mat-grid-tile><mat-grid-tile>{{planillaSel.isssPatronal |
+                    currency}}</mat-grid-tile>
+                <mat-grid-tile>AFP patronal</mat-grid-tile><mat-grid-tile>{{planillaSel.afpPatronal |
+                    currency}}</mat-grid-tile>
+                <mat-grid-tile>ISSS empleado</mat-grid-tile><mat-grid-tile>{{planillaSel.isssEmpleado |
+                    currency}}</mat-grid-tile>
+                <mat-grid-tile>AFP empleado</mat-grid-tile><mat-grid-tile>{{planillaSel.afpEmpleado |
+                    currency}}</mat-grid-tile>
+            </mat-grid-list>
+        </mat-card-content>
+    </mat-card>
 </mat-dialog-content>

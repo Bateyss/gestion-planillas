@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MaterialModule } from '../material/material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Planilla } from '../models/planilla';
+import html2canvas from 'html2canvas';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-generar-planilla',
@@ -50,5 +52,18 @@ export class GenerarPlanillaComponent {
       //this.data.planillaList[0].salario
     }
   }
+
+  exportPDF() {
+        const data = document.getElementById('tablePlanilla');
+        html2canvas(data!).then(canvas => {
+            const imgWidth = canvas.width / 2;
+            const imgHeight = canvas.height / 2;
+            const contentDataURL = canvas.toDataURL('image/png');
+            const pdf = new jsPDF.jsPDF('l', 'px', 'a4'); // A4 size page of PDF
+            const position = 0;
+            pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+            pdf.save('exported-file.pdf'); // Save the generated PDF
+        });
+    }
 
 }

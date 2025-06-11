@@ -52,7 +52,10 @@
 
 <h2 mat-dialog-title>Generar Planilla</h2>
 <mat-dialog-content>
-    <table mat-table [dataSource]="planillaList" class="mat-elevation-z8">
+    <button matMiniFab (click)="exportPDF()">
+        <mat-icon>print</mat-icon>
+    </button>
+    <table id="tablePlanilla" mat-table [dataSource]="planillaList" class="mat-elevation-z8">
         <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef [style.textAlign]="'center'">Nombre</th>
             <td mat-cell *matCellDef="let element" [style.textAlign]="'center'"> {{element.nombre}} </td>

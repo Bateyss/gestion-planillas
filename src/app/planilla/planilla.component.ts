@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, Component, inject, Inject } from '@angular/cor
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import html2canvas from 'html2canvas';
+import * as jsPDF from 'jspdf';
 import { GenerarPlanillaComponent } from '../generar-planilla/generar-planilla.component';
 import { MaterialModule } from '../material/material.module';
 import { Empleado } from '../models/empleado';
@@ -240,6 +242,7 @@ export class CrearPlanillaDialog {
 @Component({
   selector: 'dialog-revisar',
   templateUrl: 'datos.planilla.component.html',
+  styleUrl: './planilla.component.css',
   imports: [MaterialModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -286,10 +289,20 @@ export class RevisarPlanillaDialog {
     this.cargarPlanilla();
   }
 
-  cargarPlanilla() {
-    console.log(this.planillaSeleccionado);
-    console.log(this.planillaSel);
-    
+  exportPDF() {
+        const data = document.getElementById('gridPlanilla');
+        html2canvas(data!).then(canvas => {
+            const imgWidth = canvas.width;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            const contentDataURL = canvas.toDataURL('image/png');
+            const pdf = new jsPDF.jsPDF('p', 'px', 'a4'); // A4 size page of PDF
+            const position = 0;
+            pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+            pdf.save('exported-file.pdf'); // Save the generated PDF
+        });
+    }
+
+  cargarPlanilla() {    
     var actualDate: Date = new Date()
     var planillaDate = Date.parse(this.planillaSel.fechaIngreso);
     var dateYearsDiff = actualDate.getTime() - planillaDate;
